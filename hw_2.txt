@@ -1,0 +1,60 @@
+-- Create table for artists
+create table if not exists Artists (
+  artist_id SERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL
+);
+
+-- Create table for genres
+create table if not exists Genres (
+  genre_id SERIAL PRIMARY KEY,
+  name VARCHAR(50) NOT NULL
+);
+
+-- Create table for artist-genre relationships
+create table if not exists ArtistGenres (
+  artist_id INTEGER NOT NULL,
+  genre_id INTEGER NOT NULL,
+  PRIMARY KEY (artist_id, genre_id),
+  FOREIGN KEY (artist_id) REFERENCES artists(artist_id),
+  FOREIGN KEY (genre_id) REFERENCES genres(genre_id)
+);
+
+-- Create table for albums
+create table if not exists Albums (
+  album_id SERIAL PRIMARY KEY,
+  title VARCHAR(100) NOT NULL,
+  release_year INTEGER NOT NULL
+);
+
+-- Create table for artist-album relationships
+create table if not exists AlbumArtists (
+  album_id INTEGER NOT NULL,
+  artist_id INTEGER NOT NULL,
+  PRIMARY KEY (album_id, artist_id),
+  FOREIGN KEY (album_id) REFERENCES albums(album_id),
+  FOREIGN KEY (artist_id) REFERENCES artists(artist_id)
+);
+
+-- Create table for tracks
+create table if not exists Tracks (
+  track_id SERIAL PRIMARY KEY,
+  title VARCHAR(100) NOT NULL,
+  album_id INTEGER NOT NULL,
+  FOREIGN KEY (album_id) REFERENCES albums(album_id)
+);
+
+-- Create table for collections
+create table if not exists Collections (
+  collection_id SERIAL PRIMARY KEY,
+  title VARCHAR(100) NOT NULL,
+  release_year INTEGER NOT NULL
+);
+
+-- Create table for collection-track relationships
+create table if not exists CollectionTracks (
+  collection_id INTEGER NOT NULL,
+  track_id INTEGER NOT NULL,
+  PRIMARY KEY (collection_id, track_id),
+  FOREIGN KEY (collection_id) REFERENCES collections(collection_id),
+  FOREIGN KEY (track_id) REFERENCES tracks(track_id)
+);
